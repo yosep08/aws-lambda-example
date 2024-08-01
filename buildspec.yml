@@ -1,0 +1,20 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20
+    commands:
+      - npm install
+  build:
+    commands:
+      - npm test
+  post_build:
+    commands:
+      - zip -r function.zip .
+      - echo "Deploying to Lambda"
+      - aws lambda update-function-code --function-name MyLambdaFunction --zip-file fileb://function.zip
+artifacts:
+  files:
+    - '**/*'
+  discard-paths: yes
