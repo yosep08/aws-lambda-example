@@ -9,8 +9,7 @@ phases:
   pre_build:
     commands:
       - npm install jest
-      - npm install aws-sdk-mock --save-dev
-      - npm install @aws-sdk/client-dynamodb @aws-sdk/lib-dynamodb
+      - npm install aws-sdk-client-mock @aws-sdk/client-dynamodb
   build:
     commands:
       - npm test
