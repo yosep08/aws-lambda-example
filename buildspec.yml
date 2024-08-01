@@ -6,6 +6,9 @@ phases:
       nodejs: 20
     commands:
       - npm install
+  pre_build:
+    commands:
+      - npm install jest
   build:
     commands:
       - npm test
@@ -14,6 +17,7 @@ phases:
       - zip -r function.zip .
       - echo "Deploying to Lambda"
       - aws lambda update-function-code --function-name MyLambdaFunction --zip-file fileb://function.zip
+
 artifacts:
   files:
     - '**/*'
