@@ -9,6 +9,7 @@ phases:
   pre_build:
     commands:
       - npm install jest
+      - npm install aws-sdk-mock --save-dev
   build:
     commands:
       - npm test

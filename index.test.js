@@ -2,24 +2,18 @@ const AWS = require('aws-sdk-mock');
 const { handler } = require('./index');
 
 describe('Lambda Function', () => {
-    beforeAll(() => {
-        AWS.mock('DynamoDB.DocumentClient', 'scan', (params, callback) => {
-            callback(null, { Items: [{ id: '1', nama: 'stallman', alamat: 'new york' }] });
-        });
+  afterEach(() => {
+    AWS.restore('DynamoDB.DocumentClient');
+  });
+
+  it('should return success response', async () => {
+    AWS.mock('DynamoDB.DocumentClient', 'get', (params, callback) => {
+      callback(null, { Item: { id: '1', name: 'Test Item' } });
     });
 
-    afterAll(() => {
-        AWS.restore('DynamoDB.DocumentClient');
-    });
+    const event = {}; // masukkan event yang sesuai
+    const result = await handler(event);
 
-    test('returns data from DynamoDB', async () => {
-        const event = {};
-        const result = await handler(event);
-        const expected = {
-            statusCode: 200,
-            body: JSON.stringify([{ id: '1', nama: 'stallman', alamat: 'new york' }])
-        };
-
-        expect(result).toEqual(expected);
-    });
+    expect(result).toEqual({ statusCode: 200, body: JSON.stringify({ id: '1', name: 'Test Item' }) });
+  });
 });
