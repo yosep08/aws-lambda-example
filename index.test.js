@@ -17,16 +17,12 @@ describe('Lambda Function', () => {
       Items: [expectedResult],
       Count: 1,
       ScannedCount: 1,
-      $metadata: {
-        httpStatusCode: 200,
-        requestId: 'VGBQT5R1G9C9G670410LJNVGUJVV4KQNSO5AEMVJF66Q9ASUAAJG',
-        attempts: 1,
-        totalRetryDelay: 0
-      }
+      // We do not need to include $metadata in the mock response
     });
 
     const result = await handler(event);
 
+    // Ensure the response matches what we expect
     expect(result).toEqual({
       statusCode: 200,
       body: JSON.stringify([expectedResult])
