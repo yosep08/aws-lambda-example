@@ -17,7 +17,7 @@ phases:
     commands:
       - zip -r function.zip .
       - echo "Deploying to Lambda"
-      - aws lambda update-function-code --function-name kelompok3_yosep --zip-file fileb://function.zip
+      - aws lambda update-function-code --function-name kelompok3_lambda --zip-file fileb://function.zip
 
 artifacts:
   files:
